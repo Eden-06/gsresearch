@@ -41,23 +41,19 @@ Arguments
 ---------
 
 * **FILELIST**  
-		The file list is a simple text file containing the list of pdf 
-		documents for which a bibtex entry should be looked up.
-		Each line of the file should contain the relative file path as well as
-		the corresponding title (or search query) separated by a colon (:).
-		You can create this list by executing the following command in your
-		favorite shell (assuming that each pdf file is formated as 
-		Author_Title.pdf):
+		The file list is a simple text file containing the list of pdf documents for which a bibtex entry should be looked up.
+
+		Each line of the file should contain the relative file path as well as the corresponding title (or search query) separated by a colon (:).
+		You can create this list by executing the following command in your	favorite shell (assuming that each pdf file is formated as Author_Title.pdf):
+
     ```bash
     find . -name \"*.pdf\" -type f | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1:\\4/' > titles.txt
     ´´´
 
 *  **\[BIBFILE\]**  
-		If you reference your current Bibtex file as optional argument,
-		then the script will only look for those bib items, which are not 
-		yet referenced in the given bibliography.
-		Please note that we use the file attribute of the bib item to
-		recognize already referenced files.
+		If you reference your current Bibtex file as optional argument,	then the script will only look for those bib items, which are not yet referenced in the given bibliography.
+
+   Please note that we use the file attribute of the bib item to recognize already referenced files.
 
 Usage
 -----
@@ -65,7 +61,7 @@ To show this documentation just enter.
 ```bash
 ruby getbibtex.rb
 ```
-To generate an inital **bibliography.bib** for all items referenced in the **titles.txt** file
+To generate an inital **bibliography.bib** for all items referenced in the **titles.txt** file.
 ```bash
 ruby getbibtex.rb titles.txt > bibliography.bib
 ```
@@ -103,13 +99,17 @@ After a while you can begin to automatically update your bibliography.
 
 1. Execute the **mvtodir.sh** script to copy all the new files to Folders with respect to their last name.
 2. Execute the following command to generate the _titles.txt_ files for **getbibtex**:
+
      ```bash
      find . -name "*.pdf" -type f -not -path "./Unciteable/*" | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\1:\4/' > titles.txt
      ```
+
 3. Start **getbibtex** with the following command:
+
      ```bash
      ruby getbibtex.rb titles.txt bibliography.bib 1> new.bib 2> error.log
      ```
+
 4. Inspect the results of the _new.bib_ file, complete them, and copy them to your bibliography.
 5. Inspect the _error.log_ and look for uncitable items or unidentifiable items
 
