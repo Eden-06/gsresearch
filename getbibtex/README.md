@@ -41,18 +41,17 @@ Arguments
 ---------
 
 * **FILELIST**  
-		The file list is a simple text file containing the list of pdf documents for which a bibtex entry should be looked up.
-
-		Each line of the file should contain the relative file path as well as the corresponding title (or search query) separated by a colon (:).
-		You can create this list by executing the following command in your	favorite shell (assuming that each pdf file is formated as Author_Title.pdf):
+    The file list is a simple text file containing the list of pdf documents for which a bibtex entry should be looked up.
+	  Each line of the file should contain the relative file path as well as the corresponding title (or search query) separated by a colon (:).
+    You can create this list by executing the following command in your	favorite shell (assuming that each pdf file is formated as Author_Title.pdf):
 
     ```bash
     find . -name \"*.pdf\" -type f | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1:\\4/' > titles.txt
     ´´´
 
 *  **\[BIBFILE\]**  
-		If you reference your current Bibtex file as optional argument,	then the script will only look for those bib items, which are not yet referenced in the given bibliography.
-
+   If you reference your current Bibtex file as optional argument,	then the script will only look for those bib items, which are not yet referenced in the given bibliography.
+   
    Please note that we use the file attribute of the bib item to recognize already referenced files.
 
 Usage
