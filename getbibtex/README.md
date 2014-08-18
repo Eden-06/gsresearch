@@ -12,7 +12,7 @@ Synopsis
 --------
 
 ```bash
-ruby gsbibtex.rb FILELIST \[BIBFILE\]
+ruby gsbibtex.rb FILELIST [BIBFILE]
 ```
 
 Description
