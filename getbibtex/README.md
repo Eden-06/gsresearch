@@ -10,9 +10,10 @@ Systemrequirements
 
 Synopsis
 --------
+
 ```bash
 ruby gsbibtex.rb FILELIST \[BIBFILE\]
-´´´
+```
 
 Description
 -----------
@@ -63,16 +64,16 @@ Usage
 To show this documentation just enter.
 ```bash
 ruby getbibtex.rb
-´´´
+```
 To generate an inital **bibliography.bib** for all items referenced in the **titles.txt** file
 ```bash
 ruby getbibtex.rb titles.txt > bibliography.bib
-´´´
+```
 To retreive only the new items not yet contained in the 
     **bibliography.bib** and stores them in **newitems.bib**
 ```bash
  ruby getbibtex.rb titles.txt bibliography.bib 1> newitems.bib
-´´´
+```
 
 Workflow
 --------
@@ -90,13 +91,13 @@ items:
     Unciteable/
     ...
     bibliography.bib
-´´´
+```
 
 Each new publication you use is copied to the bibliography folder
 and named according to the following Schema:
 ```
 Firstname Lastname_Full Title.pdf
-´´´
+```
 
 After a while you can begin to automatically update your bibliography.
 
@@ -104,11 +105,11 @@ After a while you can begin to automatically update your bibliography.
 2. Execute the following command to generate the _titles.txt_ files for **getbibtex**:
      ```bash
      find . -name "*.pdf" -type f -not -path "./Unciteable/*" | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\1:\4/' > titles.txt
-     ´´´
+     ```
 3. Start **getbibtex** with the following command:
      ```bash
      ruby getbibtex.rb titles.txt bibliography.bib 1> new.bib 2> error.log
-     ´´´
+     ```
 4. Inspect the results of the _new.bib_ file, complete them, and copy them to your bibliography.
 5. Inspect the _error.log_ and look for uncitable items or unidentifiable items
 
