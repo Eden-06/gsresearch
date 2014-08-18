@@ -1,6 +1,6 @@
 getbibtex
 =========
-Is a commandline tool which allows the automatic retrival of bibtex
+Is a commandline tool that allows the automatic retrival of bibtex
 items for a set of pdf files
 
 Systemrequirements
