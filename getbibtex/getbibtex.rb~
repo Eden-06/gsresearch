@@ -25,7 +25,7 @@ DESCRIPTION
  As a result, there is the possibility to get false positives for a 
  given title. To reduce their number, we compute the confidence for each
  return bibtex entry by comparing the title with the query string.
- You can adjust this value in the Configuration section of the 
+ You can adjust this value in the Configuraiton section of the 
  getbibtex.rb file.
 DISCLAIMER 
  Please note that you should not use this script in jurisdictions,

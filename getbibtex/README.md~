@@ -100,7 +100,7 @@ Firstname Lastname_Full Title.pdf
 
 After a while you can begin to automatically update your bibliography.
 
-1. Execute the **mvtodir.sh** script to copy all the new files to Folders with respect to their last name.
+1. Execute the **movetodir.sh** script to copy all the new files to Folders with respect to their last name.
 2. Execute the following command to generate the _titles.txt_ files for **getbibtex**:
      ```bash
      find . -name "*.pdf" -type f -not -path "./Unciteable/*" | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\1:\4/' > titles.txt
