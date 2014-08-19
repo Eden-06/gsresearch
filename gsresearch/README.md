@@ -29,7 +29,7 @@ Keyword       | Behavior
  any          | At least one following terms is required to be present within the result.
  without      | All following terms are prohibited to be present within the result.
  exact        | The following terms are concatenated to form a sentence which is required to present in its entirety.
- year [ from..to \| from ] |  The following term is interpreted as either a range of from and to a year or as the exact year from which the publications will be selected. (Numbers must be positive integers)
+ year [ from..to / from ] |  The following term is interpreted as either a range of from and to a year or as the exact year from which the publications will be selected. (Numbers must be positive integers)
  verbose      | Indicates that the output should be verbose. (All verbose output is directed to STDERR)
  version      | Shows the version of gsresearch
 
