@@ -70,6 +70,11 @@ the **withfiles.bib** file to the **library** folder.
 The following command makes sure, that the various file links
 work as intended.
 ```bash
- ruby gsdownload.rb -ddownloads -t../downloads paper.bib 1> withfiles.bib
+$> ls -1
+downloads/
+library/
+paper.bib
+...
+$> ruby gsdownload.rb -ddownloads -t../downloads paper.bib 1> withfiles.bib
 ```
 
