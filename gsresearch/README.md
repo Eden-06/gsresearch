@@ -2,6 +2,12 @@ gsresearch
 ==========
 This is a commandline tool that allows for brute force harvesting of Google Scholar.
 
+System requirements
+-------------------
+
+* Ruby Version 1.9.3 (or higher) [\[get here\]](https://www.ruby-lang.org/de/downloads/)
+* Mechanize Version 2.7.1 (or higher) [\[get here\](https://github.com/sparklemotion/mechanize)
+
 Synopsis
 --------
 ```bash

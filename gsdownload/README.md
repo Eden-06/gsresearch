@@ -4,6 +4,12 @@ gsdownload
 Is a commandline tool, which downloads the pdf document referenced in a
 given bibtex file.
 
+System requirements
+-------------------
+
+* Ruby Version 1.9.3 (or higher) [\[get here\]](https://www.ruby-lang.org/de/downloads/)
+* Mechanize Version 2.7.1 (or higher) [\[get here\](https://github.com/sparklemotion/mechanize)
+
 Synopsis
 --------
 ```bash
