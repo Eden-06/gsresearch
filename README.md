@@ -8,7 +8,7 @@ System requirements
 ------------------
 
 * Ruby Version 1.9.3 (or higher) [\[get here\]](https://www.ruby-lang.org/de/downloads/)
-* Mechanize Version 2.7.1 (or higher) [\[get here\](https://github.com/sparklemotion/mechanize)
+* Mechanize Version 2.7.1 (or higher) [\[get here\]](https://github.com/sparklemotion/mechanize)
 * bibfilter Version 0.9 (or higher) [\[get here\]](https://github.com/Eden-06/bibfilter)
 
 Installation
@@ -25,13 +25,13 @@ Tool Belt
 Tool       | Purpose
 :---------:|------------------------------------------------------------
 getbibtex  | fetches Bibtex entries for the currently stored publications  
-             [(more)](https://github.com/Eden-06/gsresearch/tree/master/getbibtex) 
+[(more)](https://github.com/Eden-06/gsresearch/tree/master/getbibtex) 
 gsresearch | querys Google Scholar for all entries and fetches their bibtex entries  
-             [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsresearch) 
+[(more)](https://github.com/Eden-06/gsresearch/tree/master/gsresearch) 
 gsdownload | downloads all the referenced files in a bibtex files from the respective publishers  
-             [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
+[(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
 workflow   | contains a bunch of shell scripts, which perform a semi-automatic survey by employing gsresearch, bibfilter, and gsdownload  
-             [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
+[(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
 
 Limitations
 -----------
