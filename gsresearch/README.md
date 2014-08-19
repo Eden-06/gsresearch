@@ -41,6 +41,12 @@ Keyword       | Behavior
 
 Please note that if the same keyword is present twice only the first one
 will be evaluated. 
+
+Disclaimer
+---------- 
+Please note that you should not use this script in jurisdictions,
+where automated use of Google is prohibited (almost everywhere).
+Please read Google's Terms of Service for more information.
   
 Usage
 -----

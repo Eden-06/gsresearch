@@ -16,8 +16,8 @@ Installation
 
 1. Create a gsresearch folder you use as a base for your projects
 2. Clone the [bibfilter repository](https://github.com/Eden-06/bibfilter) to that folder
-3. Clone this repository to that folder as well
-4. 
+3. Clone this repository to that folder, as well
+4. Copy the various scripts depending on your use into the desired folder
 
 Tool Belt
 ---------
@@ -27,7 +27,26 @@ Tool       | Purpose
 getbibtex  | fetches Bibtex entries for the currently stored publications [(more)](https://github.com/Eden-06/gsresearch/tree/master/getbibtex) 
 gsresearch | querys Google Scholar for all entries and fetches their bibtex entries [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsresearch) 
 gsdownload | downloads all the referenced files in a bibtex files from the respective publishers [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
-workflow   | contains a bunch of shell scripts, which perform a semi-automatic survey by employing gsresearch, bibfilter, and gsdownload  [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
+workflow   | contains a bunch of shell scripts, which perform a semi-automatic survey by employing gsresearch, bibfilter, and gsdownload  [(more)](https://github.com/Eden-06/gsresearch/tree/master/workflow) 
+
+Disclaimer
+---------- 
+Please note that you should not use this script in jurisdictions,
+where automated use of Google is prohibited (almost everywhere).
+Please read Google's Terms of Service for more information.
+
+Usage
+-----
+
+In general there are two basic usage scenarios:
+
+1. Use **getbibtex** to start managing all the stored publications in a
+	folder and iteratively update your bibliography when ever new publications arrive.
+	[(Read more)](https://github.com/Eden-06/gsresearch/tree/master/getbibtex) 
+2. Use the scripts found in the workflow together with **gsresearch**, **bibfilter** and **gsdownload**
+	to conduct a semi-automatic survey based on a search query, filter them and download the relevant publications as pdf.
+	[(Read more)](https://github.com/Eden-06/gsresearch/tree/master/workflow) 
+	 
 
 Limitations
 -----------
