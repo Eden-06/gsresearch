@@ -24,14 +24,10 @@ Tool Belt
 
 Tool       | Purpose
 :---------:|------------------------------------------------------------
-getbibtex  | fetches Bibtex entries for the currently stored publications  
-[(more)](https://github.com/Eden-06/gsresearch/tree/master/getbibtex) 
-gsresearch | querys Google Scholar for all entries and fetches their bibtex entries  
-[(more)](https://github.com/Eden-06/gsresearch/tree/master/gsresearch) 
-gsdownload | downloads all the referenced files in a bibtex files from the respective publishers  
-[(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
-workflow   | contains a bunch of shell scripts, which perform a semi-automatic survey by employing gsresearch, bibfilter, and gsdownload  
-[(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
+getbibtex  | fetches Bibtex entries for the currently stored publications [(more)](https://github.com/Eden-06/gsresearch/tree/master/getbibtex) 
+gsresearch | querys Google Scholar for all entries and fetches their bibtex entries [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsresearch) 
+gsdownload | downloads all the referenced files in a bibtex files from the respective publishers [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
+workflow   | contains a bunch of shell scripts, which perform a semi-automatic survey by employing gsresearch, bibfilter, and gsdownload  [(more)](https://github.com/Eden-06/gsresearch/tree/master/gsdownload) 
 
 Limitations
 -----------
