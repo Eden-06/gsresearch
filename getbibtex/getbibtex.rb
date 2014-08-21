@@ -7,7 +7,8 @@ require 'mechanize'
 Scholar="http://scholar.google.com/"
 Confidence=0.50 #50 percent
 Delay=(30..60) #seconds
-Version="0.8"
+Seperator="\t" #to delimit File Path from search query
+Version="0.9"
 Documentation=<<EOS
 NAME
  getbibtex - allows the automatic retrival of bibtex items for a set of given file names
@@ -37,12 +38,12 @@ ARGUMENTS
   The file list is a simple text file containing the list of pdf 
   documents for which a bibtex entry should be looked up.
   Each line of the file should contain the relative file path as well as
-  the corresponding title (or search query) separated by a colon (:).
+  the corresponding title (or search query) separated by a tab (\\t).
   You can create this list by executing the following command in your
   favorite shell (assuming that each pdf file is formated as 
   Author_Title.pdf):
     find . -name \"*.pdf\" -type f | 
-         sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1:\\4/' 
+         sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1\t\\4/' 
              > titles.txt
 
   [BIBFILE]
@@ -73,7 +74,7 @@ VERSION
 EOS
 
 def prep(line)
- a=line.split(":").map{|x| x.strip}
+ a=line.split(Seperator).map{|x| x.strip}
  return [nil,a[0].gsub("-"," ")] if a.size==1
  return [nil,a[0].gsub("-"," ")] if a.size==1
  a[1].gsub!("-"," ")

@@ -43,11 +43,11 @@ Arguments
 
 * **FILELIST**  
     The file list is a simple text file containing the list of pdf documents for which a bibtex entry should be looked up.
-    Each line of the file should contain the relative file path as well as the corresponding title (or search query) separated by a colon (:).
+    Each line of the file should contain the relative file path as well as the corresponding title (or search query) separated by a tab (\t).
     You can create this list by executing the following command in your	favorite shell (assuming that each pdf file is formated as Author_Title.pdf):
 
     ```bash
-    find . -name \"*.pdf\" -type f | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1:\\4/' > titles.txt
+    find . -name \"*.pdf\" -type f | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1\t\\4/' > titles.txt
     ```
 
 *  **\[BIBFILE\]**  
@@ -101,7 +101,7 @@ After a while you can begin to automatically update your bibliography.
 2. Execute the following command to generate the _titles.txt_ files for **getbibtex**:
 
      ```bash
-     find . -name "*.pdf" -type f -not -path "./Unciteable/*" | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\1:\4/' > titles.txt
+     find . -name "*.pdf" -type f -not -path "./Unciteable/*" | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\1\t\4/' > titles.txt
      ```
 
 3. Start **getbibtex** with the following command:
