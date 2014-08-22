@@ -56,8 +56,9 @@ for d in $Folders ; do
 		ruby bibfilter.rb -d -i"/acm\.org/" $d/*.bib > states_$d/pubacm.bib
 		ruby bibfilter.rb -d -i"/springer\.com/" $d/*.bib > states_$d/pubspringer.bib
 		ruby bibfilter.rb -d -i"/sciencedirect\.com/" $d/*.bib > states_$d/pubsciencedirect.bib
-
-		## Statistics By Kind
+    ruby bibfilter.rb -e"/ieee\.org|acm\.org|springer\.com|sciencedirect\.com/" $d/*.bib > states_$d/pubother.bib
+		
+    ## Statistics By Kind
 
 		ruby bibfilter.rb -d -aarticle $d/*.bib > states_$d/article.bib
 		ruby bibfilter.rb -d -aincollection $d/*.bib > states_$d/incollection.bib 
