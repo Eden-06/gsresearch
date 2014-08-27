@@ -11,16 +11,16 @@
 #    ACM, IEEE, Springer, ScienceDirect
 # 2. Filter out all irrelevant publications
 #    (Citation count < Log(Age))
-# 3. Creates statistics for each step in the corresponding states folder.
-#    (A peryear.csv and a states.csv is created each.)
+# 3. Creates statistics for each step in the corresponding stats folder.
+#    (A peryear.csv and a stats.csv is created each.)
 # A complete run will create the following folders:
 #  filter_pub/ 
 #  filter_rel/
-#  states_raw/
-#  states_filter_pub/
-#  states_filter_rel/
-#  states_filter_human/
-#  states_downloads/
+#  stats_raw/
+#  stats_filter_pub/
+#  stats_filter_rel/
+#  stats_filter_human/
+#  stats_downloads/
 
 echo "Filtering by main publishers..."
 
@@ -48,55 +48,55 @@ for d in $Folders ; do
    
     echo "Generating statistics for $d dataset..."
 
-    mkdir -p "states_$d"
+    mkdir -p "stats_$d"
 
 		## Statistic by Publisher
 
-		ruby bibfilter.rb -d -i"/ieee\.org/" $d/*.bib > states_$d/pubieee.bib
-		ruby bibfilter.rb -d -i"/acm\.org/" $d/*.bib > states_$d/pubacm.bib
-		ruby bibfilter.rb -d -i"/springer\.com/" $d/*.bib > states_$d/pubspringer.bib
-		ruby bibfilter.rb -d -i"/sciencedirect\.com/" $d/*.bib > states_$d/pubsciencedirect.bib
-    ruby bibfilter.rb -e"/ieee\.org|acm\.org|springer\.com|sciencedirect\.com/" $d/*.bib > states_$d/pubother.bib
+		ruby bibfilter.rb -d -i"/ieee\.org/" $d/*.bib > stats_$d/pubieee.bib
+		ruby bibfilter.rb -d -i"/acm\.org/" $d/*.bib > stats_$d/pubacm.bib
+		ruby bibfilter.rb -d -i"/springer\.com/" $d/*.bib > stats_$d/pubspringer.bib
+		ruby bibfilter.rb -d -i"/sciencedirect\.com/" $d/*.bib > stats_$d/pubsciencedirect.bib
+    ruby bibfilter.rb -e"/ieee\.org|acm\.org|springer\.com|sciencedirect\.com/" $d/*.bib > stats_$d/pubother.bib
 		
     ## Statistics By Kind
 
-		ruby bibfilter.rb -d -aarticle $d/*.bib > states_$d/article.bib
-		ruby bibfilter.rb -d -aincollection $d/*.bib > states_$d/incollection.bib 
-		ruby bibfilter.rb -d -ainproceedings $d/*.bib > states_$d/inproceedings.bib 
-		ruby bibfilter.rb -d -apatent $d/*.bib > states_$d/patent.bib
-		ruby bibfilter.rb -d -aphdthesis $d/*.bib > states_$d/phdthesis.bib
-		ruby bibfilter.rb -d -amisc $d/*.bib > states_$d/misc.bib
-		ruby bibfilter.rb -d -abook $d/*.bib > states_$d/book.bib
+		ruby bibfilter.rb -d -aarticle $d/*.bib > stats_$d/article.bib
+		ruby bibfilter.rb -d -aincollection $d/*.bib > stats_$d/incollection.bib 
+		ruby bibfilter.rb -d -ainproceedings $d/*.bib > stats_$d/inproceedings.bib 
+		ruby bibfilter.rb -d -apatent $d/*.bib > stats_$d/patent.bib
+		ruby bibfilter.rb -d -aphdthesis $d/*.bib > stats_$d/phdthesis.bib
+		ruby bibfilter.rb -d -amisc $d/*.bib > stats_$d/misc.bib
+		ruby bibfilter.rb -d -abook $d/*.bib > stats_$d/book.bib
 
-		## Show States
+		## Show stats
     reg_peryear="s/${d}\/paper([0-9]+)[.]bib/\1/" 
-    reg_states="s/states_${d}\/\|.bib\|pub//g"
+    reg_stats="s/stats_${d}\/\|.bib\|pub//g"
 
 	  if [ "$d" == "downloads" ]; then
 	    # add option -l to add linked files to the output
-			echo "Year, Count, Median Citations, Min Citations, Max Citations, Accessible" > states_$d/peryear.csv
+			echo "Year, Count, Median Citations, Min Citations, Max Citations, Accessible" > stats_$d/peryear.csv
 			for f in $d/*.bib ; do
         echo -n "$(sed -r $reg_peryear <<< $f), " ; 
 				ruby bibfilter.rb -d -t -l $f ; 
-			done >> states_$d/peryear.csv ;
+			done >> stats_$d/peryear.csv ;
 		
-			echo "Classifier, Count, Median Citations, Min Citations, Max Citations, Accessible" > states_$d/states.csv
-			for f in states_$d/*.bib ; do
-				echo -n "$(sed -e $reg_states <<< $f), " ;
+			echo "Classifier, Count, Median Citations, Min Citations, Max Citations, Accessible" > stats_$d/stats.csv
+			for f in stats_$d/*.bib ; do
+				echo -n "$(sed -e $reg_stats <<< $f), " ;
 				ruby bibfilter.rb -d -t -l $f;
-			done >> states_$d/states.csv ;
+			done >> stats_$d/stats.csv ;
 		else
-	    echo "Year, Count, Median Citations, Min Citations, Max Citations" > states_$d/peryear.csv
+	    echo "Year, Count, Median Citations, Min Citations, Max Citations" > stats_$d/peryear.csv
 			for f in $d/*.bib ; do
 				echo -n "$(sed -r $reg_peryear <<< $f), " ; 
 				ruby bibfilter.rb -d -t $f ; 
-			done >> states_$d/peryear.csv ;
+			done >> stats_$d/peryear.csv ;
 
-			echo "Classifier, Count, Median Citations, Min Citations, Max Citations" > states_$d/states.csv
-			for f in states_$d/*.bib ; do
-			 echo -n "$(sed -e $reg_states <<< $f), " ;
+			echo "Classifier, Count, Median Citations, Min Citations, Max Citations" > stats_$d/stats.csv
+			for f in stats_$d/*.bib ; do
+			 echo -n "$(sed -e $reg_stats <<< $f), " ;
 			 ruby bibfilter.rb -d -t $f;
-			done >> states_$d/states.csv ;
+			done >> stats_$d/stats.csv ;
 	  fi
 
 	fi
