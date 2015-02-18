@@ -190,7 +190,7 @@ page = agent.submit(google_form)
 id=1
 loop do
 
-  nextlink=page.links_with( :href => /scholar[?]start/ ).find{|l| /[Nn]ext|[Ww]eiter/ =~ l.to_s }
+  nextlink=page.links_with( :href => /scholar[?]start/ ).find{|l| /[Aa]vanti|[Nn]ext|[Ww]eiter/ =~ l.to_s }
  
   #collect and split all links and filter url, citationcount, and biblink
   headings=page.search("//h3/a/@href").map{|x| x.to_s}
