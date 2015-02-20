@@ -105,5 +105,5 @@ done
 if [ ! -d "filter_human" ]; then
   echo "Continue the Human filter step with the following commands:"
   echo "1. mkdir filter_human"
-  echo "2. for f in \`ls filter_rel/*.bib\` ; do echo \$f ; ruby bibfilter.rb \"filter_rel/\$f\" > \"filter_human/\$f\""
+  echo "2. for f in \`ls filter_rel/\` ; do echo \$f ; ruby bibfilter.rb \"filter_rel/\$f\" > \"filter_human/\$f\" ; done"
 fi
