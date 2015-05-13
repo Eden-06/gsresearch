@@ -165,11 +165,11 @@ searchrecords.each do|r|
      else
       bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
       unless filename.nil?
-        bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  citations={%d} \n}"%[filename,cites]) 
-	    else
-        bib.sub!(/\}[\n\r\t ]*\}/,"},\n  citations={%d} \n}"%[cites])
-  	  end
-  	  puts bib 
+       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  citations={%d} \n}"%[filename,cites]) 
+      else
+       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  citations={%d} \n}"%[cites])
+      end
+      puts bib 
      end
    else
     $stderr.puts "no title found in bibtex"
