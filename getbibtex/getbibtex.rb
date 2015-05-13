@@ -8,7 +8,7 @@ Scholar="http://scholar.google.com/"
 Confidence=0.50 #50 percent
 Delay=(30..60) #seconds
 Seperator="\t" #to delimit File Path from search query
-Version="0.9.5"
+Version="0.9.6"
 Documentation=<<EOS
 NAME
  getbibtex - allows the automatic retrival of bibtex items for a set of given file names
@@ -164,8 +164,12 @@ searchrecords.each do|r|
       $stderr.puts " "+m[1]
      else
       bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
-      bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  citations={%d} \n}"%[filename,cites]) unless filename.nil?
-      puts bib 
+      unless filename.nil?
+        bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  citations={%d} \n}"%[filename,cites]) 
+	    else
+        bib.sub!(/\}[\n\r\t ]*\}/,"},\n  citations={%d} \n}"%[cites])
+  	  end
+  	  puts bib 
      end
    else
     $stderr.puts "no title found in bibtex"
