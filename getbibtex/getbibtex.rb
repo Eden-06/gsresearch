@@ -8,7 +8,7 @@ Scholar="http://scholar.google.com/"
 Confidence=0.50 #50 percent
 Delay=(30..60) #seconds
 Seperator="\t" #to delimit File Path from search query
-Version="0.9"
+Version="0.9.5"
 Documentation=<<EOS
 NAME
  getbibtex - allows the automatic retrival of bibtex items for a set of given file names
@@ -56,7 +56,7 @@ ARGUMENTS
 USAGE
  ruby getbibtex.rb
   - shows this document
- ruby getbibtex.rb titles.txt > bibliography.bib
+ ruby getbibtex.rb titles.txt 1> bibliography.bib
   - generates the inital bibliography for all items referenced in titles
  ruby getbibtex.rb titles.txt bibliography.bib 1> newitems.bib
   - retreives only the new items not yet contained in the 
@@ -75,7 +75,6 @@ EOS
 
 def prep(line)
  a=line.split(Seperator).map{|x| x.strip}
- return [nil,a[0].gsub("-"," ")] if a.size==1
  return [nil,a[0].gsub("-"," ")] if a.size==1
  a[1].gsub!("-"," ")
  a
@@ -147,6 +146,10 @@ searchrecords.each do|r|
   google_form.q = line
   page = agent.submit(google_form)
   link=page.link_with( :href => /scholar.bib/ )
+  # Retrieve number of citations
+  citation=page.link_with( :href => /scholar[?]cite/ )
+  cites=if citation.nil? then 0 else citation.to_s.sub(/[^0-9]+/,"").to_i end
+  # Retrieve bibtex entry
   result=if link.nil? then nil else link.click end
   unless result.nil?
    bib=result.body
@@ -161,7 +164,7 @@ searchrecords.each do|r|
       $stderr.puts " "+m[1]
      else
       bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
-      bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF}\n}"%filename) unless filename.nil?
+      bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  citations={%d} \n}"%[filename,cites]) unless filename.nil?
       puts bib 
      end
    else
