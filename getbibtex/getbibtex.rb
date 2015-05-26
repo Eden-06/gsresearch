@@ -8,7 +8,7 @@ Scholar="http://scholar.google.com/"
 Confidence=0.50 #50 percent
 Delay=(30..60) #seconds
 Seperator="\t" #to delimit File Path from search query
-Version="0.9.6"
+Version="0.9.7"
 Documentation=<<EOS
 NAME
  getbibtex - allows the automatic retrival of bibtex items for a set of given file names
@@ -73,6 +73,18 @@ VERSION
  %s
 EOS
 
+def filter(l)
+ url=l.first
+ bib=l.find{|x| /scholar.bib/ =~ x.attributes[:href] }
+ c=l.find{|x| /scholar[?]cite/ =~ x.attributes[:href] }
+ cites=if c.nil? then 0 else c.to_s.sub(/[^0-9]+/,"").to_i end
+ begin
+  [bib,cites,url.uri.to_s,url.to_s] 
+ rescue # if the URI.parse(url) failed use the href attribute
+  [bib,cites,url.href,url.to_s] 
+ end 
+end
+
 def prep(line)
  a=line.split(Seperator).map{|x| x.strip}
  return [nil,a[0].gsub("-"," ")] if a.size==1
@@ -122,7 +134,7 @@ if searchrecords.empty?
  $stderr.puts "There were no new files in the database" % searchrecords.size
  exit(0)
 else
- $stderr.puts "Prepearing search for the following %d entries..." % searchrecords.size
+ $stderr.puts "Preparing search for the following %d entries..." % searchrecords.size
  searchrecords.each {|x| $stderr.puts x[0] }
 end
 
@@ -145,10 +157,20 @@ searchrecords.each do|r|
   google_form = page.form('f')
   google_form.q = line
   page = agent.submit(google_form)
-  link=page.link_with( :href => /scholar.bib/ )
-  # Retrieve number of citations
-  citation=page.link_with( :href => /scholar[?]cite/ )
-  cites=if citation.nil? then 0 else citation.to_s.sub(/[^0-9]+/,"").to_i end
+  # Replaced by the following section
+  #link=page.link_with( :href => /scholar.bib/ )
+  
+  #collect and split all links and filter url, citationcount, and biblink
+  headings=page.search("//h3/a/@href").map{|x| x.to_s}
+  link,cites,url,name=filter(
+         page.links.inject([]) do|s,l|
+          # splitt list of links in accordance to the headings
+          s << [] unless headings.index(l.attributes[:href]).nil? or /\[PDF\]/ =~ l.to_s
+          # Drop all links before the first heading
+          s.last << l unless s.last.nil? 
+          s
+         end.first() )
+  
   # Retrieve bibtex entry
   result=if link.nil? then nil else link.click end
   unless result.nil?
@@ -165,9 +187,9 @@ searchrecords.each do|r|
      else
       bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
       unless filename.nil?
-       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  citations={%d} \n}"%[filename,cites]) 
+       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%[filename,url,cites]) 
       else
-       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  citations={%d} \n}"%[cites])
+       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%[url,cites])
       end
       puts bib 
      end
