@@ -6,7 +6,7 @@ require 'mechanize'
 
 #Configuration
 Scholar="http://scholar.google.com/"
-Delay=20..40 # seconds
+Delay=(30..60) # seconds
 Version="0.9"
 
 Documentation=<<EOS
