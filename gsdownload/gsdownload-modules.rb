@@ -15,11 +15,13 @@ Modules[ /.*[.]pdf$/ ] = lambda{|page|
 }
 
 # extension for IEEE
-Modules[ /ieee\.org/ ] = lambda{|page|
+Modules[ /ieee\.org/ ] = lambda{|agent,page|
 	r=nil
-	l=page.link_with( :href => /stamp\.jsp?/ )
+	pdfurl=page.body.match(/"pdfUrl":"([^"]+)",/)
+	link="http://ieeexplore.ieee.org"+pdfurl[1]
+	l=page.link_with( :href => /ieee\.org/ )
 	unless l.nil?
-	 page=l.click
+	 page=agent.get(link, [], l.referer)
 	 l=page.frame_with(:src => /ieee\.org/)
 	 r=l.click unless l.nil?
 	end
@@ -27,7 +29,7 @@ Modules[ /ieee\.org/ ] = lambda{|page|
 }
 
 # extension for ACM
-Modules[ /acm\.org/ ] = lambda{|page|
+Modules[ /acm\.org/ ] = lambda{|agent,page|
 	r=nil
 	l=page.links.detect{|l| 
 	not ((/fulltextpdf/i =~ l.attributes.attributes['name']).nil?)
@@ -37,7 +39,7 @@ Modules[ /acm\.org/ ] = lambda{|page|
 }
 
 # extension for Springer
-Modules[ /springer\.com/ ] = lambda{|page|
+Modules[ /springer\.com/ ] = lambda{|agent,page|
 	r=nil
 	l=page.links.detect{|l| 
 	not ((/download-(chapter|article)-pdf-link/ =~ l.attributes.attributes['id']).nil?)
@@ -47,7 +49,7 @@ Modules[ /springer\.com/ ] = lambda{|page|
 }
 
 # extension for ScienceDirect
-Modules[ /sciencedirect\.com/ ] = lambda{|page|
+Modules[ /sciencedirect\.com/ ] = lambda{|agent,page|
 	r=nil
 	l=page.links.detect{|l| 
 	not ((/pdflink/i =~ l.attributes.attributes['id']).nil?)

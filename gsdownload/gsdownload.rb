@@ -83,7 +83,7 @@ def saveto(agent,url,filename)
     page = nil
     $stderr.puts "ERROR: HTML Request failed with %s on %s"%[e.to_s,url]
    end
-   file=Modules[k].call(page) unless page.nil?
+   file=Modules[k].call(agent,page) unless page.nil?
   end
   return true if (not file.nil?) and file.class==Mechanize::File and file.save!(filename)
   false
