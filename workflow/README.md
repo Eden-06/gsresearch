@@ -38,7 +38,11 @@ Execution
 	```
 9. Now you can run the **gsdownload.sh** script to download all publications
   you have selected previously to the downloads folder
-10. Finally, you can rerun **autofilter.sh** to get the statistics for the various filter steps.
+10. Afterwards, you can go through the bibtex items in the download filter and mark all relevant approaches
+  with `comment = {ApproachTag}`. Approach tags must be a words without whitespaces.
+11. Then you can create the approaches folder with `mkdir approaches`
+12. Finally, you can rerun **autofilter.sh** to get the statistics for the various filter steps.
+    (Make sure that the APPROACHES variable collects in the script all approach tags separated by a whitespace.)
 
 Disclaimer
 ---------- 
