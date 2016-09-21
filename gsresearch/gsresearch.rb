@@ -7,7 +7,7 @@ require 'mechanize'
 #Configuration
 Scholar="http://scholar.google.com/"
 Delay=(30..60) # seconds
-Version="0.9"
+Version="1.0"
 
 Documentation=<<EOS
 NAME
@@ -129,6 +129,14 @@ if query.empty? or (not query.assoc("version").nil?)
  puts Version
  exit(1)
 end
+
+## show disclamer
+echo "+-------------------------Disclaimer------------------------------+"
+echo "|Please note that you should not use this script in jurisdictions,|"
+echo "|where automated use of Google is prohibited (almost everywhere). |"
+echo "|Please read Google's Terms of Service for more information.      |"
+echo "+-------------------------Disclaimer------------------------------+"
+echo ""
 
 ## automatically extract values
 c=Hash.new
