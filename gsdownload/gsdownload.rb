@@ -153,6 +153,7 @@ bibitems.each_with_index.map do|bib,i|
     filename="%s_%d.pdf"%[year,i+=1]
     Mechanize.new do|agent|
       agent.keep_alive=false
+      agent.user_agent_alias='Windows Mozilla' # required for ACM
       agent.history.max_size=1
 		  if saveto(agent,url,File.join(downloaddir,filename))
 		    p=bib.index{|x| x.strip=="}"}
