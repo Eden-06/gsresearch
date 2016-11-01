@@ -131,12 +131,12 @@ if query.empty? or (not query.assoc("version").nil?)
 end
 
 ## show disclamer
-echo "+-------------------------Disclaimer------------------------------+"
-echo "|Please note that you should not use this script in jurisdictions,|"
-echo "|where automated use of Google is prohibited (almost everywhere). |"
-echo "|Please read Google's Terms of Service for more information.      |"
-echo "+-------------------------Disclaimer------------------------------+"
-echo ""
+puts "+-------------------------Disclaimer------------------------------+"
+puts "|Please note that you should not use this script in jurisdictions,|"
+puts "|where automated use of Google is prohibited (almost everywhere). |"
+puts "|Please read Google's Terms of Service for more information.      |"
+puts "+-------------------------Disclaimer------------------------------+"
+puts ""
 
 ## automatically extract values
 c=Hash.new
@@ -198,7 +198,7 @@ page = agent.submit(google_form)
 id=1
 loop do
 
-  nextlink=page.links_with( :href => /scholar[?]start/ ).find{|l| /[Aa]vanti|[Nn]ext|[Ww]eiter/ =~ l.to_s }
+  nextlink=page.links_with( :href => /scholar[?]start/ ).find{|l| /[Aa]vanti|[Nn]ext|[Ww]eiter|[Vv]olgende/ =~ l.to_s }
  
   #collect and split all links and filter url, citationcount, and biblink
   headings=page.search("//h3/a/@href").map{|x| x.to_s}
