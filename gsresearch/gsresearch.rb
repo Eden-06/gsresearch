@@ -21,6 +21,11 @@ DESCRIPTION
  It is designed to collect all the papers found for a given expression
  and emit the bibtex reference found for each publication, 
  the citation count as well as a link to the publication.
+ 
+DISCLAIMER
+ Please note that you should not use this script in jurisdictions,
+ where automated use of Google is prohibited (almost everywhere).
+ Please read Google's Terms of Service for more information. 
 
 EXPRESSION
  Is represented as a keyword followed by list of query terms.
@@ -129,14 +134,6 @@ if query.empty? or (not query.assoc("version").nil?)
  puts Version
  exit(1)
 end
-
-## show disclamer
-puts "+-------------------------Disclaimer------------------------------+"
-puts "|Please note that you should not use this script in jurisdictions,|"
-puts "|where automated use of Google is prohibited (almost everywhere). |"
-puts "|Please read Google's Terms of Service for more information.      |"
-puts "+-------------------------Disclaimer------------------------------+"
-puts ""
 
 ## automatically extract values
 c=Hash.new
