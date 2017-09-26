@@ -8,7 +8,7 @@ Scholar="http://scholar.google.com/"
 Confidence=0.50 #50 percent
 Delay=(30..60) #seconds
 Seperator="\t" #to delimit File Path from search query
-Version="0.9.7"
+Version="0.9.8"
 Documentation=<<EOS
 NAME
  getbibtex - allows the automatic retrival of bibtex items for a set of given file names
@@ -154,7 +154,7 @@ searchrecords.each do|r|
   filename,line=*r
   sleep(Delay.min+rand(Delay.max-Delay.min))
   $stderr.puts "query for %s" % line
-  google_form = page.form('f')
+  google_form = page.form_with(id: 'gs_hdr_frm')
   google_form.q = line
   page = agent.submit(google_form)
   # Replaced by the following section
