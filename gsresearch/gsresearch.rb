@@ -90,66 +90,66 @@ commands=["help","version","with","any","without","exact","year","verbose"]
 #method definitions
 
 def filter(l)
- url=l.first
- bib=l.find{|x| /scholar.bib/ =~ x.attributes[:href] }
- c=l.find{|x| /scholar[?]cite/ =~ x.attributes[:href] }
- cites=if c.nil? then 0 else c.to_s.sub(/[^0-9]+/,"").to_i end
- begin
-  [bib,cites,url.uri.to_s,url.to_s] 
- rescue # if the URI.parse(url) failed use the href attribute
-  [bib,cites,url.href,url.to_s] 
- end 
+	url=l.first
+	bib=l.find{|x| /scholar.bib/ =~ x.attributes[:href] }
+	c=l.find{|x| /scholar[?]cite/ =~ x.attributes[:href] }
+	cites=if c.nil? then 0 else c.to_s.sub(/[^0-9]+/,"").to_i end
+	begin
+		[bib,cites,url.uri.to_s,url.to_s] 
+	rescue # if the URI.parse(url) failed use the href attribute
+		[bib,cites,url.href,url.to_s] 
+	end 
 end
 
 def make_range(low,high)
-  lo=low.to_i
-  hi=high.to_i
-  if lo==0 then   
-    if hi==0 then [] else [hi,hi] end
-  else
-    if hi==0 then [lo,lo] else 
-     lo,hi=hi,lo if hi < lo    
-     [lo,hi]
-    end
-  end
+	lo=low.to_i
+	hi=high.to_i
+	if lo==0 then   
+		if hi==0 then [] else [hi,hi] end
+	else
+		if hi==0 then [lo,lo] else 
+			lo,hi=hi,lo if hi < lo    
+			[lo,hi]
+		end
+	end
 end
 
 
 # start of execution
 
 query=ARGV.inject([]) do|s,e|
- s << ["with"] if s.empty? and commands.index(e).nil? 
- s << []       unless commands.index(e).nil?
- s.last << e
- s
+	s << ["with"] if s.empty? and commands.index(e).nil? 
+	s << []       unless commands.index(e).nil?
+	s.last << e
+	s
 end
 
 ## catch help and version keyword
 if query.empty? or (not query.assoc("help").nil?)
- puts Documentation
- exit(1)
+	puts Documentation
+	exit(1)
 end
 
 if query.empty? or (not query.assoc("version").nil?)
- puts Version
- exit(1)
+	puts Version
+	exit(1)
 end
 
 ## automatically extract values
 c=Hash.new
 commands.each do|x|
- r=query.assoc(x)
- c[x]=if r.nil? or r.size==1 then [] else r[1..-1] end
+	r=query.assoc(x)
+	c[x]=if r.nil? or r.size==1 then [] else r[1..-1] end
 end
 
 ## customize
 c["year"]=if c["year"].nil? or c["year"].empty?
-            []
-          else
-            lo,hi=c["year"][0].split("..").map{|x| x.to_i}
-            hi=lo if hi.nil?
-            make_range(lo,hi)
-          end  
+						[]
+					else
+						lo,hi=c["year"][0].split("..").map{|x| x.to_i}
+						hi=lo if hi.nil?
+						make_range(lo,hi)
+					end  
 
 verbose=!(c["verbose"].nil?)
 
@@ -158,11 +158,11 @@ verbose=!(c["verbose"].nil?)
 agent = Mechanize.new
 ## Start interacting with Google Scholar
 begin
- page = agent.get(Scholar)
+	page = agent.get(Scholar)
 rescue => e
- $stderr.puts "ERROR: Could not access %s" % Scholar
- $stderr.puts "(Ruby Exception: %s)"       % e.to_s
- exit(2)
+	$stderr.puts "ERROR: Could not access %s" % Scholar
+	$stderr.puts "(Ruby Exception: %s)"       % e.to_s
+	exit(2)
 end
 
 ## change google scholar settings
@@ -174,61 +174,65 @@ page=agent.submit(config_form,config_form.button_with( :name=> 'save'))
 
 ## query google scholar for search string
 sleep(Delay.min+rand(Delay.max-Delay.min))
-google_form = page.form_with( :id => "gs_hdr_frm_adv")
+google_form = page.form_with( :id => "gs_asd_frm") # gs_asd_frm
+if (verbose and google_form.nil?)
+	$stderr.puts "Google form could not be found!"
+	exit(3)
+end
 google_form.as_q = c["with"].join(" ") unless c["with"].nil? or c["with"].empty?
 google_form.as_epq = c["exact"].join(" ") unless c["exact"].nil? or c["exact"].empty?
 google_form.as_oq = c["any"].join(" ") unless c["any"].nil? or c["any"].empty?
 google_form.as_eq  = c["without"].join(" ") unless c["without"].nil? or c["without"].empty?
 unless c["year"].nil? or c["year"].empty?
- google_form.as_ylo = c["year"][0]
- google_form.as_yhi = c["year"][1]
+	google_form.as_ylo = c["year"][0]
+	google_form.as_yhi = c["year"][1]
 end
 
 if verbose
 	$stderr.puts "querying for:"
-  commands.each do|com|
-   $stderr.puts " %s: %s" % [com,c[com].join(" ")] unless c[com].nil? or c[com].empty? or com=="verbose"
-  end
+	commands.each do|com|
+		$stderr.puts " %s: %s" % [com,c[com].join(" ")] unless c[com].nil? or c[com].empty? or com=="verbose"
+	end
 end
 page = agent.submit(google_form)
 
 id=1
 loop do
 
-  nextlink=page.links_with( :href => /scholar[?]start/ ).find{|l| /[Aa]vanti|[Nn]ext|[Ww]eiter|[Vv]olgende/ =~ l.to_s }
+	nextlink=page.links_with( :href => /scholar[?]start/ ).find{|l| /[Aa]vanti|[Nn]ext|[Ww]eiter|[Vv]olgende/ =~ l.to_s }
  
-  #collect and split all links and filter url, citationcount, and biblink
-  headings=page.search("//h3/a/@href").map{|x| x.to_s}
-  result=page.links.inject([]) do|s,l|
-          # splitt list of links in accordance to the headings
-          s << [] unless headings.index(l.attributes[:href]).nil? or /\[PDF\]/ =~ l.to_s
-          # Drop all links before the first heading
-          s.last << l unless s.last.nil? 
-          s
-         end.map{|l| filter(l) }
+	#collect and split all links and filter url, citationcount, and biblink
+	headings=page.search("//h3/a/@href").map{|x| x.to_s}
+	result=page.links.inject([]) do|s,l|
+		# splitt list of links in accordance to the headings
+		s << [] unless headings.index(l.attributes[:href]).nil? or /\[PDF\]/ =~ l.to_s
+		# Drop all links before the first heading
+		s.last << l unless s.last.nil? 
+		s
+	end.map{|l| filter(l) }
 
-  $stderr.puts "found %d items" % result.size if verbose
+	$stderr.puts "found %d items" % result.size if verbose
 
-  result.each do|link,cites,url,name|
-    sleep(Delay.min+rand(Delay.max-Delay.min))
-    result=if link.nil? then nil else link.click end
-    unless result.nil?
-      bib=String.new(result.body)
-      # Set the character encoding to utf-8 and hope for google scholar to comply
-      bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
-      bib.sub!(/\}[\n\r\t ]+\}/,
-               "},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%
-                [url,cites])
-      puts bib 
-    else
-      $stderr.puts "[ERROR] Could not grab : %s (%s)" % [name,url] if verbose  
-    end
-  end
-  break if nextlink.nil?
-  sleep(Delay.min+rand(Delay.max-Delay.min))
-  id+=1
-  $stderr.puts "next page: %d (%s)" % [id,nextlink.uri.to_s] if verbose
-  page=nextlink.click
+	result.each do|link,cites,url,name|
+		sleep(Delay.min+rand(Delay.max-Delay.min))
+		result=if link.nil? then nil else link.click end
+		unless result.nil?
+			bib=String.new(result.body)
+			# Set the character encoding to utf-8 and hope for google scholar to comply
+			bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
+			bib.sub!(/\}[\n\r\t ]+\}/,
+							"},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%
+							[url,cites])
+			puts bib 
+		else
+			$stderr.puts "[ERROR] Could not grab : %s (%s)" % [name,url] if verbose  
+		end
+	end
+	break if nextlink.nil?
+	sleep(Delay.min+rand(Delay.max-Delay.min))
+	id+=1
+	$stderr.puts "next page: %d (%s)" % [id,nextlink.uri.to_s] if verbose
+	page=nextlink.click
 
 end
 
