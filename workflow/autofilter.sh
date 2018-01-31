@@ -120,7 +120,10 @@ if [ ! -d "filter_human" ]; then
 fi
 
 if [ -d approaches ]; then
+	
+	#Modify the list of approaches to your needs 
 	APPROACHES="lodwick grm tao rbm agr orm ecargo mmr inm dci ontouml helena epsilon chameleon rica jawiro otj rava powerjava rumer fcr scala nextej javastage relations objectz"
+
   reg_approach="s/stats_approaches\/perapproach\/(.+)[.]bib/\1/" 
   echo "Generating statistics for the following approaches..."
   #echo $APPROACHES
