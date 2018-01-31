@@ -3,7 +3,7 @@
 # downloading papers
 
 Dir="downloads"
-RUBY="ruby1.9.1"
+RUBY="ruby"
 
 echo "Downloading all referenced documents to the $Dir folder..."
 

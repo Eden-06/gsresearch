@@ -22,7 +22,7 @@
 #  stats_filter_human/
 #  stats_downloads/
 
-RUBY="ruby1.9.1"
+RUBY="ruby"
 
 echo "Filtering by main publishers..."
 

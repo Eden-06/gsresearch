@@ -11,7 +11,7 @@
 
 CONSTANT="12"
 YEAR=`date +%Y`
-RUBY="ruby1.9.1"
+RUBY="ruby"
 
 echo "[WARNING]: Filtering by citation count is deprecated, and deemed evil."
 
