@@ -29,8 +29,8 @@ Options
     indicates that the output should be verbose
     (All verbose output is directed to STDERR)
 
-Module
-------
+Modules
+-------
 
 Specify the website papers are retrieved:
 
@@ -123,8 +123,8 @@ grab publication containing all the terms: models, runtime, verification and giv
  ruby gsresearch.rb gs models runtime verification verbose 1> papers.bib 2> error.log
 ```
 
-Limitiations
-------------
+Limitations
+-----------
 
  * Google Scholar limits the search results to at most 1000 (10 results per page and at most 100 Pages).
  * Currently only German, English and Italian Google Scholar (scholar.google.com) is supported
