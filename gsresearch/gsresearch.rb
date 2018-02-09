@@ -10,20 +10,20 @@ Version="1.1"
 
 Documentation=<<EOS
 NAME
- gsresearch -  is a tool for brute force harvesting of publication search sites.
+ gsresearch - is a tool for brute force harvesting of publication search sites.
 
 SYNOPSIS
  ruby gsresearch.rb [-v] MODULE QUERY
 
 DESCRIPTION
- gsresearch.rb is a tool for brute force harvesting of Google Scholar.
- It is designed to collect all the papers found for a given expression
+ gsresearch.rb is a tool for brute force harvesting of publication sites.
+ It is designed to collect all the papers found for a given query
  and emit the bibtex reference found for each publication, 
  the citation count as well as a link to the publication.
  
 DISCLAIMER
  Please note that you should not use this script in jurisdictions,
- where automated use of Google is prohibited (almost everywhere).
+ where automated use of publication sites is prohibited (almost everywhere).
  Please read Google's Terms of Service for more information. 
 
 MODULE

@@ -22,6 +22,11 @@ NAME
 
 SYNOPSIS
  ruby gsresearch.rb [-v] (gs|googlescholar) QUERY
+ 
+DISCLAIMER
+ Please note that you should not use this script in jurisdictions,
+ where automated use of Google is prohibited (almost everywhere).
+ Please read Google's Terms of Service for more information. 
 
 QUERY
  Is represented as a keyword followed by list of query terms.
