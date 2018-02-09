@@ -86,7 +86,7 @@ class HelpCrawler
 		end
 		crawler=Modules[command].call(Mechanize.new,false)
 		puts crawler.__doc__
-		exit(2)
+		exit(1)
 	end
 
 end
@@ -140,8 +140,11 @@ Modules["test"]=lambda do|agent,verbose|
 	DummyCrawler.new(agent,verbose)
 end
 
+# load modules from relative path
+ROOT_DIR=if respond_to?(:__dir__) then __dir__ else File.dirname(__FILE__) end
+Dir.open(ROOT_DIR){|d|d.each{|f|require_relative(f) if /.*\-module\.rb/ =~ f}}
 
-require_relative 'gsresearch-modules'
+#require_relative +'gs-module'
 
 #start execution
 verbose=false
@@ -157,7 +160,7 @@ else
 end
 unless Modules.has_key?(command)
 	$stderr.puts("ERROR: %s is not a valide MODULE!" %command)
-	$stderr.puts(" Valid modules are:"+Modules.keys.join(", "))
+	$stderr.puts(" Valid modules are: "+Modules.keys.join(", "))
 	exit(1)
 end
 
