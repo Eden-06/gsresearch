@@ -1,29 +1,90 @@
 gsresearch
 ==========
-This is a commandline tool that allows for brute force harvesting of Google Scholar.
+This is a commandline tool for brute force harvesting of publication search sites.
 
 System requirements
 -------------------
 
 * Ruby Version 1.9.3 (or higher) [\[get here\]](https://www.ruby-lang.org/de/downloads/)
-* Mechanize Version 2.7.1 (or higher) [\[get here\](https://github.com/sparklemotion/mechanize)
+* Mechanize Version 2.7.1 (or higher) [\[get here\]](https://github.com/sparklemotion/mechanize)
 
 Synopsis
 --------
 ```bash
- ruby gsresearch.rb [EXPRESSION]
+ ruby gsresearch.rb [OPTIONS] MODULE QUERY
 ```
 
 Description
 -----------
 
-GSresearch is a tool for brute force harvesting of Google Scholar.
-It is designed to collect all the papers found for a given expression
+GSresearch is a tool for brute force harvesting of publication sites.
+It is designed to collect all the papers found for a given query
 and emit the bibtex reference found for each publication, 
 the citation count as well as a link to the publication.
 
-Expression
-----------
+Options
+-------
+
+* `-v`  
+    indicates that the output should be verbose
+    (All verbose output is directed to STDERR)
+
+Module
+------
+
+Specify the website papers are retrieved:
+
+* `help`  
+    shows this document
+* `version`  
+    shows the version of gsresearch
+* `gs` or `googlescholar`  
+    Selects google scholar as target for querying
+* `scopus` *(not yet supported)*  
+    Selects Elsevier's Scopus as target for querying 
+
+Qurery
+------
+
+Is represented a list of query terms, however, the semantics and keywords depend
+on the used module. See ruby gsresearch.rb help MODULE for more information.
+
+ 
+Disclaimer
+---------- 
+Please note that you should not use this script in jurisdictions,
+where automated use of publication sites is prohibited (almost everywhere).
+Please read Google's Terms of Service for more information.
+  
+Usage
+-----
+To show this documentation.
+```bash
+ ruby gsresearch.rb help 
+```
+To show the documentation of a MODULE.
+```bash
+ ruby gsresearch.rb help MODULE
+```
+To show the version number
+```bash
+ruby gsresearch.rb version
+```
+
+
+Google Scholar Module
+=====================
+
+This is a module for gsresearch for brute force harvesting of Google Scholar.
+
+Synopsis
+--------
+```bash
+ ruby gsresearch.rb [-v] (gs|googlescholar) QUERY
+```
+
+Query
+-----
 
 Is represented as a keyword followed by list of query terms.
 The tool supports the following keywords:
@@ -40,44 +101,30 @@ Keyword       | Behavior
  version      | Shows the version of gsresearch
 
 Please note that if the same keyword is present twice only the first one
-will be evaluated. 
+will be evaluated.
 
-Disclaimer
----------- 
-Please note that you should not use this script in jurisdictions,
-where automated use of Google is prohibited (almost everywhere).
-Please read Google's Terms of Service for more information.
-  
 Usage
 -----
-To show this documentation.
-```bash
- ruby gsresearch.rb help 
-```
-To show the version number
-```bash
-ruby gsresearch.rb version
-```
-
+    
 To grab publication containing all the terms: models, runtime, verification.
 ```bash
-ruby gsresearch.rb models runtime verification
+ruby gsresearch.rb gs models runtime verification
 ```
 To grab publication containing all the terms: models, runtime, verification published in the years between 2010 and 2012.
 ```bash
-ruby gsresearch.rb models runtime verification year 2010 2012
+ruby gsresearch.rb gs models runtime verification year 2010 2012
 ```
 To grab publication containing the term: verification and none of the terms: hardware, teaching.
 ```bash
- ruby gsresearch.rb with verification without hardware teaching
+ ruby gsresearch.rb gs with verification without hardware teaching
 ```
 grab publication containing all the terms: models, runtime, verification and give additional information to STDERR and the bibitems to STDOUT.
 ```bash
- ruby gsresearch.rb models runtime verification verbose 1> papers.bib 2> error.log
+ ruby gsresearch.rb gs models runtime verification verbose 1> papers.bib 2> error.log
 ```
 
 Limitiations
 ------------
 
  * Google Scholar limits the search results to at most 1000 (10 results per page and at most 100 Pages).
- * Currently only German and English Google Scholar (scholar.google.com) is supported
+ * Currently only German, English and Italian Google Scholar (scholar.google.com) is supported
