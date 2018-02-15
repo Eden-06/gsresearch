@@ -91,10 +91,10 @@ EOS
 		end
 		## change google scholar settings
 		@page=@page.link_with(:href => /scholar_settings/).click
-		config_form = page.form_with(:action => '/scholar_setprefs')
+		config_form = @page.form_with(:action => '/scholar_setprefs')
 		config_form.radiobutton_with(:name => 'scis', :value => 'yes').check
 		$stderr.puts("[%s] Configuration " % @page.title) if @verbose
-		@page=agent.submit(config_form,config_form.button_with( :name=> 'save'))
+		@page=@agent.submit(config_form,config_form.button_with( :name=> 'save'))
 		#Delay next action
 		sleep(Delay.min+rand(Delay.max-Delay.min))
 	end
