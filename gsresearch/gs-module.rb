@@ -73,7 +73,7 @@ EOS
 		@agent=agent
 		@verbose=verbose
 		@query=nil
-		@googlescholar="http://scholar.google.com/"
+		@googlescholar="https://scholar.google.com/"
 		@commands=["with","any","without","exact","year"]
 		@page=nil
 		@query=nil
@@ -81,7 +81,7 @@ EOS
 	
 	def prepare()
 		## show disclamer
-		puts GSDisclaimer
+		$stderr.puts GSDisclaimer
 		begin
 			@page = @agent.get(@googlescholar)
 		rescue => e
