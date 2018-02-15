@@ -15,5 +15,5 @@ echo "Collecting initial dataset..."
 
  mkdir raw
  for i in {2010..2014} ; do
-  $RUBY gsresearch.rb gs with model driven development any modelling modeling without social psycho year $i verbose > "raw/paper$i.bib" ;
+  $RUBY gsresearch.rb -v gs with model driven development any modelling modeling without social psycho year $i > "raw/paper$i.bib" ;
  done
