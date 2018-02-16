@@ -127,6 +127,8 @@ unless Modules.has_key?(command)
 end
 
 agent=Mechanize.new
+#pick random user agent
+agent.user_agent_alias = (Mechanize::AGENT_ALIASES.keys - ['Mechanize']).sample
 begin
 	crawler=Modules[command].call(agent,verbose)
 	# prepare the crawler passing the query
