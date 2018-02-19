@@ -45,6 +45,8 @@ QUERY
    the following term is interpreted as either a range of from and to a year or
    as the exact year from which the publications will be selected
    (Numbers must be positive integers)
+ * skip NUMBER
+   skips the given number of pages of the search result
  Please note, that if the same keyword is present twice only the first one
  will be evaluated. 
 
@@ -57,10 +59,12 @@ USAGE
  ruby gsresearch.rb gs with verification without hardware teaching
   - grab publication containing the term: verification
     and none of the terms: hardware, teaching
- ruby gsresearch.rb gs models runtime verification verbose
+ ruby gsresearch.rb -v gs models runtime verification
   - grab publication containing all the terms: models, runtime, verification
     and give additional information to STDOUT
-    
+ ruby gsresearch.rb gs models runtime verification skip 4
+  - grab publication containing all the terms: models, runtime, verification
+    and skip the first four pages (continuing on page 5)
 ISSUES
  * Google Scholar (gs module) limits the search results to at most 1000
    (10 results per page and at most 100 Pages).
@@ -74,9 +78,10 @@ EOS
 		@verbose=verbose
 		@query=nil
 		@googlescholar="https://scholar.google.com/"
-		@commands=["with","any","without","exact","year"]
+		@commands=["with","any","without","exact","year","skip"]
 		@page=nil
 		@query=nil
+		@skippages=0
 	end
 	
 	def prepare()
@@ -175,6 +180,9 @@ EOS
 			google_form.as_ylo = query["year"][0]
 			google_form.as_yhi = query["year"][1]
 		end
+		unless query["skip"].nil? or query["skip"].empty?
+			@skippages=query["skip"][0].to_i
+		end
 		agent.submit(google_form)	
 	end	
 	
@@ -213,26 +221,31 @@ EOS
 			entries=collect_entries(@page)			
 			$stderr.puts "found %d items on page %d" % [entries.size,id] if @verbose
 			
-			#iterate through found entries
-			entries.each do|link,cites,url,name|
-				sleep(Delay.min+rand(Delay.max-Delay.min))
+			if @skippages<=0
+				#iterate through found entries
+				entries.each do|link,cites,url,name|
+					sleep(Delay.min+rand(Delay.max-Delay.min))
 				
-				result=if link.nil? then nil else link.click end
-				bib,error=[nil,nil]
-				unless result.nil?
-					bib=String.new(result.body)
-					# Set the character encoding to utf-8 and hope for google scholar to comply
-					bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
-					bib.sub!(/\}[\n\r\t ]+\}/,
-									"},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%
-									[url,cites])
-				else
-					error="[ERROR] Could not grab : %s (%s)"%[name,url]
+					result=if link.nil? then nil else link.click end
+					bib,error=[nil,nil]
+					unless result.nil?
+						bib=String.new(result.body)
+						# Set the character encoding to utf-8 and hope for google scholar to comply
+						bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
+						bib.sub!(/\}[\n\r\t ]+\}/,
+										"},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%
+										[url,cites])
+					else
+						error="[ERROR] Could not grab : %s (%s)"%[name,url]
+					end
+					proc.call(bib,error)
 				end
-				proc.call(bib,error)
+			else
+				@skippages-=1
+				$stderr.puts "skipped" if @verbose
 			end
-			break if nextlink.nil?
 
+			break if nextlink.nil?
 			id+=1
 			#$stderr.puts "next page: %d (%s)" % [id,nextlink.uri.to_s] if @verbose
 			@page=nextlink.click			
