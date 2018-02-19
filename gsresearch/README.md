@@ -91,14 +91,12 @@ The tool supports the following keywords:
 
 Keyword       | Behavior
 :------------:|---------------------------------------------------------
- help         | Shows this document
  with         | All following terms are required to be present within the result. (This keyword is assumed as default)
  any          | At least one following terms is required to be present within the result.
  without      | All following terms are prohibited to be present within the result.
  exact        | The following terms are concatenated to form a sentence which is required to present in its entirety.
- year [ from..to / from ] |  The following term is interpreted as either a range of from and to a year or as the exact year from which the publications will be selected. (Numbers must be positive integers)
- verbose      | Indicates that the output should be verbose. (All verbose output is directed to STDERR)
- version      | Shows the version of gsresearch
+ year [ from..to / from ] |  The following term is interpreted as either a range of from and to a year or as the exact year from which the publications will be selected (Numbers must be positive integers).
+ skip NUMBER  | Skips the given number of pages of the search resuls (Numbre must be a positive integer).
 
 Please note that if the same keyword is present twice only the first one
 will be evaluated.
@@ -118,9 +116,14 @@ To grab publication containing the term: verification and none of the terms: har
 ```bash
  ruby gsresearch.rb gs with verification without hardware teaching
 ```
-grab publication containing all the terms: models, runtime, verification and give additional information to STDERR and the bibitems to STDOUT.
+To grab publication containing all the terms: models, runtime, verification and give additional information to STDERR and the bibitems to STDOUT.
 ```bash
- ruby gsresearch.rb gs models runtime verification verbose 1> papers.bib 2> error.log
+ ruby gsresearch.rb -v gs models runtime verification 1> papers.bib 2> error.log
+```
+
+To continue the query on publications with the terms: models, runtime, verification on page 5 of the search results and appending the results to papers.bib.
+```bash
+ ruby gsresearch.rb -v gs models runtime verification skip 4 1>> papers.bib 2> error.log
 ```
 
 Limitations
