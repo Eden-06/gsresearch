@@ -8,21 +8,26 @@
 # where page is either a Mechanize::File and Mechanize::Page object
 # and the pattern is matched against the url.
 
-Modules[ /.*[.]pdf$/ ] = lambda{|page|
+Modules[ /.*[.]pdf$/ ] = lambda{|agent,page|
 	r=nil
 	r=page if page.class==Mechanize::File
+	unless page.iframes.empty?
+		l=page.iframes.first
+		r=l.click unless l.nil?
+	end
 	r
 }
 
 # extension for IEEE
 Modules[ /ieee\.org/ ] = lambda{|agent,page|
 	r=nil
-	pdfurl=page.body.match(/"pdfUrl":"([^"]+)",/)
-	link="http://ieeexplore.ieee.org"+pdfurl[1]
+	link=nil
+	pdfurl=page.body.match(/"pdfUrl":"([^"]+)"/)
+	link="https://ieeexplore.ieee.org"+pdfurl[1] unless pdfurl.nil?
 	l=page.link_with( :href => /ieee\.org/ )
-	unless l.nil?
+	unless l.nil? and link.nil?
 	 page=agent.get(link, [], l.referer)
-	 l=page.frame_with(:src => /ieee\.org/)
+	 l=page.iframe_with( :src => /ieee\.org/ )
 	 r=l.click unless l.nil?
 	end
 	r
@@ -42,7 +47,7 @@ Modules[ /acm\.org/ ] = lambda{|agent,page|
 Modules[ /springer\.com/ ] = lambda{|agent,page|
 	r=nil
 	l=page.links.detect{|l| 
-	not ((/download-(chapter|article)-pdf-link/ =~ l.attributes.attributes['id']).nil?)
+	not ((/gtm-pdf-link/ =~ l.attributes.attributes['class']).nil?)
 	}
 	r=l.click unless l.nil?
 	r
@@ -51,11 +56,14 @@ Modules[ /springer\.com/ ] = lambda{|agent,page|
 # extension for ScienceDirect
 Modules[ /sciencedirect\.com/ ] = lambda{|agent,page|
 	r=nil
-	l=page.links.detect{|l| 
-	not ((/pdflink/i =~ l.attributes.attributes['id']).nil?)
-	}
+	pdfurl=page.body.match(/"pdfUrlForCrawlers":"([^"]+)"/)
+	link=pdfurl[1]
+	l=page.link_with( :href => /science/ )
+	unless l.nil?
+	 page=agent.get(link, [], l.referer)
+	 l=page.iframe_with( :src => /sciencedirect\.com/ )
+	 r=l.click unless l.nil?
+	end
 	r=l.click unless l.nil?
 	r
 }
-
-
