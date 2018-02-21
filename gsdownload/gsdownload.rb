@@ -6,7 +6,7 @@ require 'mechanize'
 
 # Configuration
 Delay=(30..60) # seconds
-Version="0.9"
+Version="1.0"
 Documentation=<<EOS
 NAME
  gsdownload - allows to download the pdf document referenced in a given bibtex file
