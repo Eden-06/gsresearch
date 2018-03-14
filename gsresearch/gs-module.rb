@@ -225,9 +225,13 @@ EOS
 				#iterate through found entries
 				entries.each do|link,cites,url,name|
 					sleep(Delay.min+rand(Delay.max-Delay.min))
-				
-					result=if link.nil? then nil else link.click end
-					bib,error=[nil,nil]
+
+					result,bib,error=[nil,nil,nil]
+					begin
+						result=link.click unless link.nil?
+					rescue =>e #catch any StandardError
+						$stderr.puts e.to_s if @verbose
+					end
 					unless result.nil?
 						bib=String.new(result.body)
 						# Set the character encoding to utf-8 and hope for google scholar to comply
