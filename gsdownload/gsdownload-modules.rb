@@ -61,7 +61,7 @@ Modules[ /sciencedirect\.com/ ] = lambda{|agent,page|
 	l=page.link_with( :href => /science/ )
 	unless l.nil?
 	 page=agent.get(link, [], l.referer)
-	 l=page.iframe_with( :src => /sciencedirect\.com/ )
+ 	 l=page.link_with( :href => /els-cdn\.com/ )
 	 r=l.click unless l.nil?
 	end
 	r=l.click unless l.nil?
