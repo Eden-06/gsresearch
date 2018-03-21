@@ -56,14 +56,14 @@ Modules[ /springer\.com/ ] = lambda{|agent,page|
 # extension for ScienceDirect
 Modules[ /sciencedirect\.com/ ] = lambda{|agent,page|
 	r=nil
+	link=nil
 	pdfurl=page.body.match(/"pdfUrlForCrawlers":"([^"]+)"/)
-	link=pdfurl[1]
+	link=pdfurl[1] unless pdfurl.nil?
 	l=page.link_with( :href => /science/ )
-	unless l.nil?
+	unless l.nil? or link.nil?
 	 page=agent.get(link, [], l.referer)
  	 l=page.link_with( :href => /els-cdn\.com/ )
 	 r=l.click unless l.nil?
 	end
-	r=l.click unless l.nil?
 	r
 }
