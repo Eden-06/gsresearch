@@ -72,6 +72,7 @@ for d in $Folders ; do
 
 		$RUBY bibfilter.rb -d -aarticle $d/*.bib > stats_$d/article.bib
 		$RUBY bibfilter.rb -d -aincollection $d/*.bib > stats_$d/incollection.bib 
+		$RUBY bibfilter.rb -d -ainbook $d/*.bib > stats_$d/inbook.bib 
 		$RUBY bibfilter.rb -d -ainproceedings $d/*.bib > stats_$d/inproceedings.bib 
 		$RUBY bibfilter.rb -d -apatent $d/*.bib > stats_$d/patent.bib
 		$RUBY bibfilter.rb -d -aphdthesis $d/*.bib > stats_$d/phdthesis.bib
