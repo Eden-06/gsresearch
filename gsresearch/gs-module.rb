@@ -236,7 +236,7 @@ EOS
 						bib=String.new(result.body)
 						# Set the character encoding to utf-8 and hope for google scholar to comply
 						bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
-						bib.sub!(/\}[\n\r\t ]+\}/,
+						bib.sub!(/\}[\n\r\t ]+\}$/,
 										"},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%
 										[url,cites])
 					else
