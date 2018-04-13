@@ -47,7 +47,7 @@ Arguments
     You can create this list by executing the following command in your	favorite shell (assuming that each pdf file is formated as Author_Title.pdf):
 
     ```bash
-    find . -name \"*.pdf\" -type f | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1\t\\4/' > titles.txt
+    find . -name "*.pdf" -type f | sed -E 's/(^.+[/](.*[ ])*(.*)[_](.*)[.]pdf)/\\1\t\\4/' > titles.txt
     ```
 
 *  **\[BIBFILE\]**  
