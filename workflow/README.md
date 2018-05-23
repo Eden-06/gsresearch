@@ -10,7 +10,7 @@ Preparation
 1. Create a new empty folder for your survey
 2. Copy the following files from gsresearch and bibfilter to this folder
     * gsresearch.rb (including the modules *-module.rb) 
-    * gsdownload.rb
+    * gsdownload.rb (including the modules gsdownload-modules.rb)
     * bibfilter.rb
     * autofilter.sh
     * gsdownload.sh
