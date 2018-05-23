@@ -33,9 +33,9 @@ Execution
 7. Create a filter_human/ folder in your survey folder
 8. You guessed it, now you must manually go through the publications and
   sort the wheat from the chaff. To do this use the interactive mode of **bibfilter**.
-	```bash
+```bash
   $> for f in `ls filter_rel/` ; do echo $f ; ruby bibfilter.rb "filter_rel/$f" > "filter_human/$f" ; done
-	```
+```
 9. Now you can run the **gsdownload.sh** script to download all publications
   you have selected previously to the downloads folder
 10. Afterwards, you can go through the bibtex items in the download filter and mark all relevant approaches
