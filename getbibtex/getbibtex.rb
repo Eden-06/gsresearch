@@ -8,7 +8,7 @@ Scholar="http://scholar.google.com/"
 Confidence=0.50 #50 percent
 Delay=(30..60) #seconds
 Seperator="\t" #to delimit File Path from search query
-Version="0.9.9"
+Version="1.0.0"
 Documentation=<<EOS
 NAME
  getbibtex - allows the automatic retrival of bibtex items for a set of given file names
@@ -187,9 +187,9 @@ searchrecords.each do|r|
      else
       bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
       unless filename.nil?
-       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%[filename,url,cites]) 
+       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  file = {:%s:PDF},\n  howpublished = {\\url{%s}},\n  url = {%s},\n  citations={%d} \n}"%[filename,url,url,cites]) 
       else
-       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%[url,cites])
+       bib.sub!(/\}[\n\r\t ]*\}/,"},\n  howpublished = {\\url{%s}},\n  url = {%s},\n  citations={%d} \n}"%[url,url,cites])
       end
       puts bib 
      end

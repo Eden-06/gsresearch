@@ -237,8 +237,8 @@ EOS
 						# Set the character encoding to utf-8 and hope for google scholar to comply
 						bib.encode!('UTF-8',bib.encoding, {invalid: :replace, undef: :replace, replace: ' '} )
 						bib.sub!(/\}[\n\r\t ]+\}$/,
-										"},\n  howpublished = {\\url{%s}},\n  citations={%d} \n}"%
-										[url,cites])
+										"},\n  howpublished = {\\url{%s}},\n  url = {%s},\n  citations={%d} \n}"%
+										[url,url,cites])
 					else
 						error="[ERROR] Could not grab : %s (%s)"%[name,url]
 					end
