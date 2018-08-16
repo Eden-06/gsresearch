@@ -8,7 +8,7 @@ Scholar="http://scholar.google.com/"
 Confidence=0.50 #50 percent
 Delay=(30..60) #seconds
 Seperator="\t" #to delimit File Path from search query
-Version="0.9.8"
+Version="0.9.9"
 Documentation=<<EOS
 NAME
  getbibtex - allows the automatic retrival of bibtex items for a set of given file names
@@ -165,7 +165,7 @@ searchrecords.each do|r|
   link,cites,url,name=filter(
          page.links.inject([]) do|s,l|
           # splitt list of links in accordance to the headings
-          s << [] unless headings.index(l.attributes[:href]).nil? or /\[PDF\]/ =~ l.to_s
+          s << [] unless headings.index(l.attributes[:href]).nil? or /\[(PDF|HTML)|\]/ =~ l.to_s
           # Drop all links before the first heading
           s.last << l unless s.last.nil? 
           s

@@ -158,7 +158,7 @@ EOS
 		headings=page.search("//h3/a/@href").map{|x| x.to_s}
 		entries=page.links.inject([]) do|s,l|
 			# splitt list of links in accordance to the headings
-			s << [] unless headings.index(l.attributes[:href]).nil? or /\[PDF\]/ =~ l.to_s
+			s << [] unless headings.index(l.attributes[:href]).nil? or /\[(PDF|HTML)\]/ =~ l.to_s
 			# Drop all links before the first heading
 			s.last << l unless s.last.nil? 
 			s

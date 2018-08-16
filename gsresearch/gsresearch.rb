@@ -6,7 +6,7 @@ require 'mechanize'
 
 #Configuration
 Scholar="http://scholar.google.com/"
-Version="1.1"
+Version="1.1.1"
 
 Documentation=<<EOS
 NAME
