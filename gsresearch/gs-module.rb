@@ -11,7 +11,7 @@ EOS
 
 #Pattern to identify the next link in a google scholar page 
 GSLanguages=/avanti|next|weiter|volgende/i
-Delay=(30..60) # seconds
+Delay=(60..90) # seconds
 
 class GSCrawler
 
