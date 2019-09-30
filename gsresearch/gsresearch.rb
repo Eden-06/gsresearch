@@ -104,7 +104,7 @@ end
 
 # load modules from relative path
 ROOT_DIR=if respond_to?(:__dir__) then __dir__ else File.dirname(__FILE__) end
-Dir.open(ROOT_DIR){|d|d.each{|f|require_relative(f) if /.*\-module\.rb/ =~ f}}
+Dir.open(ROOT_DIR){|d|d.each{|f|require_relative(f) if /^.*\-module\.rb$/ =~ f}}
 
 #require_relative +'gs-module'
 
