@@ -97,6 +97,7 @@ Keyword       | Behavior
  exact        | The following terms are concatenated to form a sentence which is required to present in its entirety.
  year [ from..to / from ] |  The following term is interpreted as either a range of from and to a year or as the exact year from which the publications will be selected (Numbers must be positive integers).
  skip NUMBER  | Skips the given number of pages of the search resuls (Numbre must be a positive integer).
+ source       | The following terms denote individual journals/conferences of interest.
 
 Please note that if the same keyword is present twice only the first one
 will be evaluated.
@@ -126,8 +127,13 @@ To continue the query on publications with the terms: models, runtime, verificat
  ruby gsresearch.rb -v gs models runtime verification skip 4 1>> papers.bib 2> error.log
 ```
 
+To query all publications of the ICSE conference in 2019 and store it in papers.bib.
+```bash
+ ruby gsresearch.rb gs source ICSE year 2019 > papers.bib
+```
+
 Limitations
 -----------
 
  * Google Scholar limits the search results to at most 1000 (10 results per page and at most 100 Pages).
- * Currently only German, English and Italian Google Scholar (scholar.google.com) is supported
+ * Currently only German, English and Italian Google Scholar (scholar.google.com) are supported

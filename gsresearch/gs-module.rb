@@ -47,6 +47,8 @@ QUERY
    (Numbers must be positive integers)
  * skip NUMBER
    skips the given number of pages of the search result
+ * source
+   the following terms denote individual journals/conferences of interest
  Please note, that if the same keyword is present twice only the first one
  will be evaluated. 
 
@@ -65,6 +67,8 @@ USAGE
  ruby gsresearch.rb gs models runtime verification skip 4
   - grab publication containing all the terms: models, runtime, verification
     and skip the first four pages (continuing on page 5)
+ ruby gsresearch.rb gs source ICSE
+  - grab publications from the conference/journal with the name: ICSE
 ISSUES
  * Google Scholar (gs module) limits the search results to at most 1000
    (10 results per page and at most 100 Pages).
@@ -78,7 +82,7 @@ EOS
 		@verbose=verbose
 		@query=nil
 		@googlescholar="https://scholar.google.com/"
-		@commands=["with","any","without","exact","year","skip"]
+		@commands=["with","any","without","exact","year","skip","source"]
 		@page=nil
 		@query=nil
 		@skippages=0
@@ -176,6 +180,7 @@ EOS
 		google_form.as_epq = query["exact"].join(" ") unless query["exact"].nil? or query["exact"].empty?
 		google_form.as_oq = query["any"].join(" ") unless query["any"].nil? or query["any"].empty?
 		google_form.as_eq  = query["without"].join(" ") unless query["without"].nil? or query["without"].empty?
+		google_form.as_publication = query["source"].join(" ") unless query["source"].nil? or query["source"].empty?
 		unless query["year"].nil? or query["year"].empty?
 			google_form.as_ylo = query["year"][0]
 			google_form.as_yhi = query["year"][1]
